@@ -1,0 +1,23 @@
+[project]
+name = "ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning"
+version = "0.1.0"
+description = "ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]>=0.203.0,<1.0.0"
+]
+
+[project.scripts]
+ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning = "ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.main:run"
+run_crew = "ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.main:run"
+train = "ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.main:train"
+replay = "ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.main:replay"
+test = "ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
