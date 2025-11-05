@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agentic Growth Command Center</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Agentic Growth Command Center</h1>
+      <p>Launch unstoppable social franchises, render cinematic storyboards, and close the loop on performance.</p>
+    </header>
+
+    <main>
+      <section class="panel">
+        <h2>1. Generate Storyboard</h2>
+        <form id="storyboard-form">
+          <label>
+            Project Name
+            <input type="text" name="project_name" placeholder="Halloween Drop" required />
+          </label>
+          <label>
+            Reference Image URLs (comma separated)
+            <textarea name="reference_images" placeholder="https://.../hero.png" required></textarea>
+          </label>
+          <label>
+            Frame Prompts (one per line)
+            <textarea name="prompts" placeholder="Frame 1 prompt..." required></textarea>
+          </label>
+          <label>
+            Negative Prompts (optional, one per line)
+            <textarea name="negative_prompts" placeholder="Frame 1 negative prompt..."></textarea>
+          </label>
+          <div class="grid">
+            <label>
+              CFG Scale
+              <input type="number" name="cfg_scale" step="0.1" value="5" />
+            </label>
+            <label>
+              Steps
+              <input type="number" name="steps" value="28" />
+            </label>
+            <label>
+              Width
+              <input type="number" name="width" value="768" />
+            </label>
+            <label>
+              Height
+              <input type="number" name="height" value="1024" />
+            </label>
+          </div>
+          <button type="submit">Render Storyboard</button>
+        </form>
+        <pre id="storyboard-response" class="output"></pre>
+      </section>
+
+      <section class="panel">
+        <h2>2. Launch Agentic Campaign</h2>
+        <form id="launch-form">
+          <div class="grid">
+            <label>
+              Brand Name
+              <input type="text" name="brand_name" placeholder="Popcorn Labs" />
+            </label>
+            <label>
+              Niche
+              <input type="text" name="niche" placeholder="AI storyboard SaaS" />
+            </label>
+            <label>
+              Offer Name
+              <input type="text" name="offer_name" placeholder="Popcorn Studio" />
+            </label>
+            <label>
+              Budget Level
+              <select name="budget_level">
+                <option value="scrappy">Scrappy</option>
+                <option value="balanced">Balanced</option>
+                <option value="premium">Premium</option>
+              </select>
+            </label>
+          </div>
+          <label>
+            Brand Voice
+            <input type="text" name="brand_voice" placeholder="Bold, cinematic, human" />
+          </label>
+          <label>
+            Audience Profile
+            <textarea name="audience_profile" placeholder="Growth teams, founders, creative directors"></textarea>
+          </label>
+          <label>
+            Objective
+            <input type="text" name="objective" value="Launch omni-channel growth campaign" />
+          </label>
+          <div class="actions">
+            <button type="submit">Launch (Async)</button>
+            <button type="button" id="launch-sync">Launch &amp; Wait</button>
+          </div>
+        </form>
+        <pre id="launch-response" class="output"></pre>
+      </section>
+    </main>
+
+    <footer>
+      <p>Powered by Stable Diffusion in the cloud + crewAI orchestration. Bring your Groq key for low-cost reasoning.</p>
+    </footer>
+
+    <script src="main.js" type="module"></script>
+  </body>
+</html>

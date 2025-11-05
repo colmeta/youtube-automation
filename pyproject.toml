@@ -5,15 +5,16 @@ description = "ultimate_ai_powered_digital_empire___multi_platform_domination_wi
 authors = [{ name = "Your Name", email = "you@example.com" }]
 requires-python = ">=3.10,<3.14"
 dependencies = [
-    "crewai[tools]>=0.203.0,<1.0.0"
+    "crewai[tools]>=0.203.0,<1.0.0",
+    "fastapi>=0.115.0,<1.0.0",
+    "uvicorn[standard]>=0.30.0,<1.0.0",
+    "httpx>=0.27.0,<1.0.0",
+    "python-multipart>=0.0.9,<1.0.0",
+    "aiofiles>=23.2.0,<1.0.0"
 ]
 
 [project.scripts]
-ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning = "ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.main:run"
-run_crew = "ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.main:run"
-train = "ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.main:train"
-replay = "ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.main:replay"
-test = "ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.main:test"
+run_crew = "ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.main:main"
 
 [build-system]
 requires = ["hatchling"]
