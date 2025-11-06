@@ -22,8 +22,12 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build]
 include = ["src/**", "Human_content/**", "Popcorn/**", "README.md"]
+sources = ["src"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning"]
+packages = ["ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/**", "Human_content/**", "Popcorn/**", "README.md"]
 [tool.crewai]
 type = "crew"
