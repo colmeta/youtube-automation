@@ -1,72 +1,51 @@
 #!/usr/bin/env python
-import sys
-from ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.crew import UltimateAiPoweredDigitalEmpireMultiPlatformDominationWithVoiceVideoCloningCrew
+"""CLI entry points for the agentic growth crew."""
 
-# This main file is intended to be a way for your to run your
-# crew locally, so refrain from adding unnecessary logic into this file.
-# Replace with inputs you want to test with, it will automatically
-# interpolate any tasks and agents information
+from __future__ import annotations
 
-def run():
-    """
-    Run the crew.
-    """
-    inputs = {
-        'niche': 'sample_value'
+import argparse
+import json
+from typing import Any, Dict
+
+from ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.crew import (
+    UltimateAiPoweredDigitalEmpireMultiPlatformDominationWithVoiceVideoCloningCrew,
+)
+
+
+def _build_default_inputs() -> Dict[str, Any]:
+    return {
+        "brand_name": "Popcorn Labs",
+        "niche": "AI storyboard SaaS",
+        "budget_level": "scrappy",
+        "brand_voice": "bold, cinematic, human",
     }
-    UltimateAiPoweredDigitalEmpireMultiPlatformDominationWithVoiceVideoCloningCrew().crew().kickoff(inputs=inputs)
 
 
-def train():
-    """
-    Train the crew for a given number of iterations.
-    """
-    inputs = {
-        'niche': 'sample_value'
-    }
-    try:
-        UltimateAiPoweredDigitalEmpireMultiPlatformDominationWithVoiceVideoCloningCrew().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
+def run(inputs: Dict[str, Any] | None = None) -> None:
+    crew = UltimateAiPoweredDigitalEmpireMultiPlatformDominationWithVoiceVideoCloningCrew()
+    result = crew.kickoff(inputs=inputs or _build_default_inputs())
+    for task in result:
+        print(f"\n=== {getattr(task, 'name', 'Task')} ===")
+        output = getattr(task, "output", None)
+        if output:
+            print(output)
 
-    except Exception as e:
-        raise Exception(f"An error occurred while training the crew: {e}")
 
-def replay():
-    """
-    Replay the crew execution from a specific task.
-    """
-    try:
-        UltimateAiPoweredDigitalEmpireMultiPlatformDominationWithVoiceVideoCloningCrew().crew().replay(task_id=sys.argv[1])
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Run the Agentic Growth crew")
+    parser.add_argument(
+        "--inputs",
+        type=str,
+        help="JSON string with crew inputs (brand_name, niche, budget_level, etc.)",
+    )
 
-    except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
+    args = parser.parse_args()
+    payload = None
+    if args.inputs:
+        payload = json.loads(args.inputs)
 
-def test():
-    """
-    Test the crew execution and returns the results.
-    """
-    inputs = {
-        'niche': 'sample_value'
-    }
-    try:
-        UltimateAiPoweredDigitalEmpireMultiPlatformDominationWithVoiceVideoCloningCrew().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs)
+    run(payload)
 
-    except Exception as e:
-        raise Exception(f"An error occurred while testing the crew: {e}")
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: main.py <command> [<args>]")
-        sys.exit(1)
-
-    command = sys.argv[1]
-    if command == "run":
-        run()
-    elif command == "train":
-        train()
-    elif command == "replay":
-        replay()
-    elif command == "test":
-        test()
-    else:
-        print(f"Unknown command: {command}")
-        sys.exit(1)
+    main()

@@ -1,367 +1,94 @@
 ---
-competitive_intelligence_analysis:
-  description: Analyze the top 20 competitors in {niche}, reverse-engineer their most
-    successful content strategies, identify their weaknesses and content gaps, and
-    create a detailed competitive intelligence report. Focus on discovering untapped
-    opportunities and strategies to outperform them in every metric.
-  expected_output: A comprehensive competitive intelligence report detailing competitor
-    weaknesses, content gaps, successful patterns to leverage, untapped opportunities,
-    and specific strategies to dominate each competitor in search rankings and engagement.
-  agent: competitive_intelligence_analyst
-predict_future_viral_topics:
-  description: Use AI pattern analysis to predict 10-15 topics in {niche} that will
-    become viral in the next 2-4 weeks. Analyze social signals, emerging technologies,
-    cultural shifts, and search patterns to identify trends before competitors. Provide
-    confidence scores and optimal timing for each predicted trend.
-  expected_output: A trend prediction report listing 10-15 future viral topics with
-    confidence scores, optimal timing windows, predicted engagement levels, and strategic
-    recommendations for being first-to-market on each trend.
-  agent: ai_trend_predictor
+scan_growth_opportunities:
+  description: >-
+    Audit live signals across social platforms, funding announcements, product launches, and conversation spikes to
+    surface the top 5 accounts in {niche} that show active need for growth acceleration. For each account capture
+    headline metrics, pain signals, and a crisp why-now summary tailored to {offer_name}.
+  expected_output: >-
+    Momentum radar in markdown with sections: 1) Prospect snapshot table (name, platform, audience size, velocity signal,
+    urgency score), 2) Opportunity thesis per prospect, 3) Fast outreach angle mapped to their current narrative, 4) Risks
+    or blockers to note.
+  agent: growth_signal_hunter
+
+synthesize_audience_intelligence:
+  description: >-
+    Combine competitive insights, Human_content IDEATION prompts, and audience sentiment for {brand_name} to map
+    primary personas, emotional drivers, unmet needs, and cultural hooks that resonate with the pipeline of prospects.
+    Create clarity on what each segment craves and what they reject.
+  expected_output: >-
+    Intelligence dossier in markdown with sections: 1) Persona matrices (demographic, psychographic, channel behavior),
+    2) Emotional trigger map tied to Human_content prompts, 3) Competitive defensibility notes, 4) Risks worth monitoring.
+  agent: audience_intelligence_analyst
   context:
-  - competitive_intelligence_analysis
-hack_youtube_algorithm:
-  description: 'REVERSE-ENGINEER YouTube''s current algorithm in {niche} by analyzing
-    top-ranking videos, identifying exact ranking factors, discovering algorithm loopholes,
-    and creating a step-by-step algorithm exploitation strategy. Find the specific
-    signals that guarantee #1 rankings and create an action plan to dominate them
-    all.'
-  expected_output: 'A comprehensive algorithm hacking guide with: current ranking
-    factors by priority, discovered algorithm loopholes, specific signals that guarantee
-    top rankings, step-by-step exploitation strategies, and a detailed action plan
-    to achieve #1 rankings in {niche}.'
-  agent: youtube_algorithm_hacker
+    - scan_growth_opportunities
+
+architect_campaign_system:
+  description: >-
+    Translate intelligence into a modular campaign architecture inspired by the Human_content creation suite. Define
+    serial content arcs, evergreen pillars, and human-touch checkpoints so collaborators know where to improvise versus
+    automate. Respect budget level {budget_level} and highlight unlocks that premium upgrades would deliver.
+  expected_output: >-
+    Campaign OS document in markdown with: 1) Mission statement and success metrics, 2) Serialized content plan mapped to
+    Human_content prompts (ideation, creation, distribution, optimization), 3) Human-in-the-loop checklist, 4) Resource plan
+    comparing scrappy vs premium execution.
+  agent: social_content_architect
   context:
-  - competitive_intelligence_analysis
-engineer_viral_content_formulas:
-  description: Create scientifically-engineered viral content formulas based on psychological
-    triggers, dopamine patterns, and proven engagement mechanics in {niche}. Develop
-    5-7 different viral templates with specific hooks, structures, and psychological
-    elements that guarantee maximum shareability and engagement.
-  expected_output: 5-7 scientifically-engineered viral content templates with psychological
-    triggers, dopamine hooks, engagement mechanics, and step-by-step formulas for
-    creating irresistible content that outperforms competitors.
-  agent: viral_content_formula_engineer
+    - synthesize_audience_intelligence
+
+craft_storyboard_brief:
+  description: >-
+    Build cinematic storyboard briefs for the hero concepts prioritized in the campaign system. Each brief should include
+    narrative arc, shot-by-shot prompts (max 8 frames), reference style notes, and success criteria for the cloud Stable
+    Diffusion pipeline.
+  expected_output: >-
+    Storyboard briefing packet with sections per concept: 1) Concept one-liner, 2) Visual tone board, 3) Frame table with
+    prompt, negative prompt, desired emotion, 4) Delivery specifications (aspect ratio, cfg, steps, ip-adapter hints).
+  agent: social_content_architect
   context:
-  - competitive_intelligence_analysis
-  - predict_future_viral_topics
-engineer_addictive_engagement:
-  description: Create psychological engagement manipulation strategies that make viewers
-    obsessively engage with {niche} content. Design dopamine-driven hooks, compulsive
-    rewatching triggers, viral sharing psychology, and addictive comment engagement
-    patterns. Engineer content that becomes psychologically impossible to ignore or
-    forget.
-  expected_output: 'Psychological engagement manipulation toolkit with: dopamine-driven
-    hooks, compulsive rewatching triggers, viral sharing psychology formulas, addictive
-    comment patterns, and step-by-step implementation guide for creating psychologically
-    irresistible content.'
-  agent: engagement_manipulation_specialist
+    - architect_campaign_system
+
+render_storyboard_sequences:
+  description: >-
+    Call the cloud Stable Diffusion service to generate each storyboard defined in the brief. Ensure reference locking,
+    maintain brand aesthetics, and capture metadata (seed, cfg, steps, inference time). Provide download URLs plus quality
+    notes for manual review.
+  expected_output: >-
+    Render manifest summarizing each storyboard with: 1) Frame gallery URLs, 2) Metadata table, 3) Success/failure notes,
+    4) Recommendations for iterative improvements or upscale handoff.
+  agent: visual_storyboard_director
   context:
-  - engineer_viral_content_formulas
-  - hack_youtube_algorithm
-research_trending_topics:
-  description: Research current trending topics AND future viral predictions in {niche}.
-    Analyze what content is performing well now, identify emerging patterns, and leverage
-    competitive intelligence and viral formulas to discover content opportunities
-    that will dominate the space. Focus on finding topics competitors haven't covered
-    yet.
-  expected_output: A comprehensive research report detailing trending topics, successful
-    content patterns, audience preferences, and content opportunities in the {niche}
-    space, formatted in markdown with specific insights and recommendations.
-  agent: youtube_trend_research_specialist
+    - craft_storyboard_brief
+
+polish_human_copy:
+  description: >-
+    Run the AI-to-human refinement system on copy, scripts, and captions generated so far. Remove robotic phrasing,
+    inject specific details, and document the edits made. Align voice with {brand_voice} and note any legal/compliance flags.
+  expected_output: >-
+    Polished content bundle containing: 1) Version A/B/C per Human_content guidelines, 2) Change log table referencing AI
+    markers removed, 3) Brand voice alignment notes, 4) Follow-up tasks for human reviewers.
+  agent: human_tone_editor
   context:
-  - competitive_intelligence_analysis
-  - predict_future_viral_topics
-  - engineer_viral_content_formulas
-  - hack_youtube_algorithm
-  - engineer_addictive_engagement
-create_video_scripts:
-  description: Based on the trending topics research, create 3-5 original, engaging
-    YouTube video scripts for the {niche}. Each script should include a compelling
-    hook, valuable content structure, key talking points, and strong call-to-action.
-    Ensure scripts are optimized for audience retention and engagement.
-  expected_output: 3-5 complete, original YouTube video scripts with hooks, main content
-    sections, transitions, and calls-to-action. Each script should be 8-12 minutes
-    long when spoken, formatted clearly with timing recommendations.
-  agent: content_script_writer
+    - architect_campaign_system
+    - render_storyboard_sequences
+
+deploy_distribution_playbook:
+  description: >-
+    Activate Human_content distribution prompts to craft cross-platform rollout plans, influencer brief templates, and
+    community activation steps. Include organic-first options plus optional paid/influencer boosts that fit {budget_level}.
+  expected_output: >-
+    Launch playbook with: 1) Channel-by-channel timeline, 2) Influencer brief outline, 3) Community activation plan,
+    4) KPI dashboard blueprint ready for the analytics team, 5) Fallback actions when budget must remain zero.
+  agent: distribution_field_commander
   context:
-  - research_trending_topics
-optimize_for_youtube_seo:
-  description: 'Create comprehensive SEO optimization for each video including: 1)
-    SEO-optimized titles, descriptions with keywords, and relevant tags, 2) Video
-    chapters/timestamps for better retention, 3) End screens and cards optimization
-    strategies, 4) Community tab content suggestions, 5) Cross-platform promotion
-    content, and 6) Analytics tracking setup. Research keywords and optimize for YouTube''s
-    algorithm in the {niche}.'
-  expected_output: 'Complete advanced SEO package for each video including: optimized
-    titles/descriptions/tags, detailed video chapters with timestamps, end screen/card
-    strategies, community post content, cross-platform promotion posts (Twitter, LinkedIn,
-    Instagram), analytics KPIs to track, and posting strategy recommendations.'
-  agent: youtube_seo_specialist
+    - polish_human_copy
+
+analyze_performance_feedback:
+  description: >-
+    Design measurement loops, ROI calculators, and experimentation agenda leveraging the Optimization prompts from
+    Human_content. Recommend instrumentation, data sources, and the first three experiments to run after launch.
+  expected_output: >-
+    Performance control center with: 1) KPI schema, 2) Dashboard + reporting cadence, 3) ROI model showing scrappy vs
+    premium scenarios, 4) Experiment queue with hypotheses, metrics, guardrails, and next decision gates.
+  agent: performance_oracle
   context:
-  - research_trending_topics
-  - create_video_scripts
-generate_video_content:
-  description: 'Transform the video scripts into complete videos by: 1) Creating AI-generated
-    visuals and scenes for each script section, 2) Converting scripts to high-quality
-    AI voiceovers, 3) Generating background music and sound effects, 4) Combining
-    all elements into polished {niche} videos. Use free AI tools and focus on creating
-    engaging visual content.'
-  expected_output: Complete video files for each script with AI-generated visuals,
-    professional voiceovers, background music, and proper editing. Include file paths
-    and technical specifications for each video created.
-  agent: ai_video_producer
-  context:
-  - create_video_scripts
-generate_ai_voiceovers:
-  description: Create voice strategy and speech pattern recommendations for all video
-    scripts in {niche}. Develop voice guidelines, tone recommendations, and speaking
-    patterns that will engage audiences. Provide strategic voice content optimization
-    without using specific AI tools.
-  expected_output: Professional voice strategy guidelines for each video script with
-    optimal tone settings, consistent pacing recommendations, and strategic voice
-    content optimization plan for maximum engagement.
-  agent: content_voice_specialist
-  context:
-  - create_video_scripts
-create_viral_medium_articles:
-  description: 'Transform the YouTube video content into 2-3 viral Medium articles
-    optimized for maximum engagement and reach in {niche}. Each article should: 1)
-    Use proven viral writing formulas with compelling headlines and hooks, 2) Include
-    SEO-optimized tags and descriptions for Medium, 3) Structure content for maximum
-    reader retention and engagement, 4) Add strategic calls-to-action and cross-platform
-    links, 5) Include viral elements like data, quotes, and storytelling techniques.'
-  expected_output: 2-3 complete Medium articles with compelling headlines, optimized
-    content structure, viral hooks, Medium-specific SEO tags, engagement optimization
-    strategies, and cross-platform promotion links. Articles should be formatted in
-    Medium's style and ready to publish.
-  agent: medium_blog_domination_specialist
-  context:
-  - create_video_scripts
-  - optimize_for_youtube_seo
-create_custom_thumbnails:
-  description: Design eye-catching custom thumbnails for each video using AI-generated
-    images with compelling text overlays, bright colors, and clickable elements. Create
-    thumbnails that stand out in {niche} content and drive high click-through rates.
-    Include multiple variations for A/B testing.
-  expected_output: Custom thumbnail images for each video (1280x720 pixels) with multiple
-    variations, including text overlay suggestions, color schemes optimized for {niche}
-    audiences, and saved files ready for upload.
-  agent: youtube_publisher
-  context:
-  - generate_video_content
-  - optimize_for_youtube_seo
-create_youtube_shorts:
-  description: Extract the most engaging 30-60 second clips from each main video to
-    create viral YouTube Shorts. Focus on hook moments, key insights, or surprising
-    facts that work well as standalone content. Optimize Shorts with trending hashtags,
-    vertical format, and high engagement potential for the {niche}.
-  expected_output: 3-5 YouTube Shorts per main video (30-60 seconds each) with optimal
-    clips selected, vertical format optimized, trending hashtags included, engaging
-    captions, and clear calls-to-action to watch the full video. Include file paths
-    and upload specifications.
-  agent: ai_video_producer
-  context:
-  - generate_video_content
-  - optimize_for_youtube_seo
-launch_viral_podcast_empire:
-  description: 'Transform YouTube video content into viral podcast episodes and dominate
-    all audio platforms in {niche}. Include: 1) Audio content optimization and podcast
-    episode creation from video content, 2) Spotify, Apple Podcasts, and platform-specific
-    optimization strategies, 3) Podcast SEO and discovery optimization, 4) Strategic
-    guest appearance and network building, 5) Audio advertising and monetization strategies,
-    6) Cross-promotion between video and audio content.'
-  expected_output: 'Complete podcast empire strategy including: audio content conversion
-    systems, platform optimization guides, podcast SEO strategies, guest appearance
-    campaigns, monetization blueprints, and cross-platform promotion plans for audio
-    content domination.'
-  agent: podcast_audio_content_domination_specialist
-  context:
-  - generate_video_content
-  - create_video_scripts
-generate_ai_video_content:
-  description: Create visual content strategy and video production recommendations
-    for {niche}. Develop visual storytelling guidelines, scene composition recommendations,
-    and video optimization strategies that enhance engagement without requiring specific
-    AI video tools.
-  expected_output: Comprehensive visual content strategy with scene composition guidelines,
-    visual storytelling recommendations, and platform-specific video optimization
-    strategies for maximum engagement.
-  agent: visual_content_strategy_specialist
-  context:
-  - create_video_scripts
-  - generate_ai_voiceovers
-create_ai_avatar_videos:
-  description: Develop personal branding and presentation strategies for {niche} content
-    creators. Create branding guidelines, presentation optimization recommendations,
-    and authentic personal image strategies that build audience connection across
-    all platforms.
-  expected_output: Complete personal branding guidelines including presentation optimization
-    strategies, authentic image development plans, and cross-platform branding consistency
-    recommendations for building audience connection.
-  agent: personal_branding_presentation_specialist
-  context:
-  - create_video_scripts
-  - generate_ai_voiceovers
-generate_multi_platform_content_packages:
-  description: 'Create comprehensive content packages for Twitter/X, Instagram, Facebook,
-    LinkedIn, and TikTok optimized for each platform''s algorithm and audience in
-    {niche}. For each platform include: 1) Platform-specific post formats and lengths,
-    2) Optimized hashtags and keywords, 3) Best posting times and frequency, 4) Viral
-    hooks and engagement triggers, 5) Visual content suggestions, 6) Cross-promotion
-    strategies connecting all platforms to YouTube and Medium content.'
-  expected_output: 'Complete multi-platform content package with: Twitter threads
-    and posts, Instagram captions and story ideas, Facebook posts, LinkedIn articles
-    and posts, TikTok scripts, platform-specific hashtags, posting schedules, engagement
-    strategies, and cross-promotion plans connecting all platforms.'
-  agent: multi_platform_content_strategist
-  context:
-  - create_video_scripts
-  - create_viral_medium_articles
-  - optimize_for_youtube_seo
-dominate_all_search_rankings:
-  description: 'Achieve #1 search rankings across Google, YouTube, Medium, and all
-    search engines for high-value keywords in {niche}. Include: 1) Comprehensive keyword
-    research and competition analysis, 2) Technical SEO optimization for all platforms,
-    3) Content optimization strategies for maximum search visibility, 4) Strategic
-    backlink building and authority development, 5) Local SEO and niche-specific search
-    domination, 6) Cross-platform SEO synergy strategies.'
-  expected_output: 'Complete SEO domination strategy including: keyword target lists,
-    technical SEO checklists, content optimization guides, backlink building campaigns,
-    authority development strategies, and search ranking monitoring systems for achieving
-    #1 positions across all search engines.'
-  agent: seo_search_domination_expert
-  context:
-  - research_trending_topics
-  - create_viral_medium_articles
-  - optimize_for_youtube_seo
-upload_to_youtube:
-  description: Upload all completed videos and Shorts to YouTube with optimized metadata,
-    custom thumbnails, strategic scheduling, and cross-platform promotion. Set up
-    proper titles, descriptions, tags, chapters, end screens, and community posts.
-    Handle the complete publishing workflow and cross-platform content distribution
-    for {niche} content.
-  expected_output: Successfully uploaded videos and Shorts to YouTube with confirmation
-    links, optimized metadata applied, chapters/end screens configured, community
-    posts published, cross-platform promotion posts shared (Twitter, LinkedIn, Instagram),
-    and complete publishing summary with performance tracking setup.
-  agent: youtube_publisher
-  context:
-  - create_custom_thumbnails
-  - create_youtube_shorts
-monitor_analytics_and_optimize:
-  description: 'ACTUALLY IMPLEMENT comprehensive analytics monitoring by: 1) Using
-    YouTube search tools to analyze competitor performance and benchmarks, 2) Researching
-    real analytics platforms and methods available, 3) Setting up specific KPIs and
-    measurement frameworks, 4) Creating actionable optimization recommendations based
-    on data, 5) Providing concrete steps for performance tracking setup rather than
-    just general recommendations.'
-  expected_output: Analytics dashboard setup with KPI tracking, performance reports
-    for each video, identification of successful content patterns, optimization recommendations
-    for future content, and automated monitoring alerts for significant performance
-    changes.
-  agent: youtube_seo_specialist
-  context:
-  - upload_to_youtube
-design_affiliate_monetization_strategy:
-  description: 'Research and design a comprehensive affiliate marketing strategy for
-    all platforms in {niche}. Include: 1) Top-performing affiliate programs and products
-    relevant to the content, 2) Strategic affiliate link placement across YouTube,
-    Medium, and social media, 3) Product recommendation integration that maintains
-    audience trust, 4) Revenue optimization strategies for different content types,
-    5) Compliance guidelines and disclosure strategies, 6) Performance tracking and
-    optimization recommendations.'
-  expected_output: 'Complete affiliate monetization blueprint including: curated list
-    of high-converting affiliate programs, strategic link placement guide, product
-    recommendation templates, revenue optimization strategies, compliance checklists,
-    and performance tracking setup for maximum earnings across all platforms.'
-  agent: affiliate_monetization_strategist
-  context:
-  - generate_multi_platform_content_packages
-  - create_viral_medium_articles
-  - monitor_analytics_and_optimize
-build_email_empire_automation_funnels:
-  description: 'Create a comprehensive email marketing empire that captures leads
-    from all platforms and converts them into high-value customers in {niche}. Include:
-    1) Irresistible lead magnets for each platform (YouTube, Medium, social media),
-    2) Automated email sequences and nurture funnels, 3) Email capture strategies
-    integrated into all content, 4) Customer journey mapping and lifecycle emails,
-    5) Revenue-optimized email campaigns, 6) List segmentation and personalization
-    strategies.'
-  expected_output: 'Complete email marketing system including: lead magnet collection,
-    automated email sequences, capture integration guides for all platforms, customer
-    journey maps, revenue optimization campaigns, and performance tracking setup for
-    maximum email conversion and retention.'
-  agent: email_list_building_automation_specialist
-  context:
-  - generate_multi_platform_content_packages
-  - design_affiliate_monetization_strategy
-engineer_audience_addiction_loyalty_systems:
-  description: 'Create psychological addiction mechanisms and loyalty systems that
-    turn casual viewers into obsessed fans and brand evangelists in {niche}. Include:
-    1) Psychological addiction triggers and dopamine loops, 2) Community building
-    and cult-like following strategies, 3) Brand evangelism and word-of-mouth amplification
-    systems, 4) Loyalty rewards and exclusive content programs, 5) Retention optimization
-    and lifetime value maximization, 6) Fan-to-customer conversion funnels.'
-  expected_output: 'Complete audience psychology system including: addiction trigger
-    implementations, community building blueprints, brand evangelism strategies, loyalty
-    program designs, retention optimization tactics, and fan conversion funnels for
-    maximum audience lifetime value and brand devotion.'
-  agent: audience_psychology_retention_master
-  context:
-  - engineer_addictive_engagement
-  - build_email_empire_automation_funnels
-  - design_affiliate_monetization_strategy
-execute_total_market_domination_strategy:
-  description: 'Implement comprehensive market domination tactics that systematically
-    destroy competitors and capture 100% market share in {niche}. Include: 1) Real-time
-    competitor monitoring and intelligence systems, 2) Market gap identification and
-    rapid exploitation strategies, 3) Audience theft and competitor disruption tactics,
-    4) Brand positioning and authority establishment campaigns, 5) Market monopolization
-    and barrier creation strategies, 6) Long-term market control and expansion plans.'
-  expected_output: 'Complete market domination blueprint including: competitor monitoring
-    systems, market exploitation strategies, audience acquisition campaigns, authority
-    positioning plans, monopolization tactics, and expansion strategies for achieving
-    total market control and eliminating all competition.'
-  agent: market_intelligence_competitor_destroyer
-  context:
-  - competitive_intelligence_analysis
-  - dominate_all_search_rankings
-  - engineer_audience_addiction_loyalty_systems
-launch_total_digital_empire:
-  description: 'Coordinate and launch the complete digital domination empire across
-    ALL platforms simultaneously in {niche}. Include: 1) Master launch sequence coordination
-    across YouTube, Medium, social media, podcasts, and email, 2) Cross-platform traffic
-    orchestration and viral amplification, 3) Revenue optimization and monetization
-    activation, 4) Performance monitoring and real-time optimization, 5) Market domination
-    execution and competitor elimination, 6) Empire expansion and scaling strategies.'
-  expected_output: 'Complete digital empire launch plan with coordinated execution
-    across all platforms, traffic amplification systems, revenue activation strategies,
-    performance monitoring dashboards, market domination tactics, and scaling blueprints
-    for achieving #1 status everywhere.'
-  agent: market_intelligence_competitor_destroyer
-  context:
-  - design_affiliate_monetization_strategy
-  - build_email_empire_automation_funnels
-  - launch_viral_podcast_empire
-  - execute_total_market_domination_strategy
-  - engineer_audience_addiction_loyalty_systems
-  - dominate_all_search_rankings
-  - monitor_analytics_and_optimize
-  - generate_multi_platform_content_packages
-  - create_viral_medium_articles
-  - upload_to_youtube
-optimize_costs_roi_strategy:
-  description: Create a comprehensive cost optimization strategy for the entire automation
-    system. Analyze content value potential, implement smart tool usage patterns,
-    and provide ROI-based recommendations for when to use premium AI features vs.
-    basic alternatives. Include batch processing schedules and budget allocation strategies.
-  expected_output: 'Detailed cost optimization plan including: tool usage matrix based
-    on content value, batch processing schedules, budget allocation recommendations,
-    ROI thresholds for premium features, and monthly cost projections with savings
-    opportunities.'
-  agent: cost_optimization_roi_manager
-  context:
-  - launch_total_digital_empire
-  - generate_ai_voiceovers
-  - generate_ai_video_content
-  - create_ai_avatar_videos
+    - deploy_distribution_playbook

@@ -1,830 +1,209 @@
+"""Agentic growth crew orchestrator for the Ultimate AI Powered Digital Empire."""
+
+from __future__ import annotations
+
 import os
+from typing import List, Optional
 
-from crewai import LLM
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, LLM, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-from crewai_tools import (
-	EXASearchTool,
-	ScrapeWebsiteTool,
-	DallETool,
-	BraveSearchTool
+from crewai_tools import BraveSearchTool, EXASearchTool, ScrapeWebsiteTool
+
+from ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.tools import (
+    CloudStoryboardTool,
 )
-from ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.tools.elevenlabs_voice_tool import ElevenLabsVoiceTool
-from ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.tools.runway_video_tool import RunwayVideoTool
-from ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning.tools.heygen_avatar_tool import HeyGenAvatarTool
 
 
+def _build_llm(model: Optional[str] = None, temperature: float = 0.4) -> LLM:
+    """Create an LLM instance with Groq-first fallbacks."""
 
+    groq_api_key = os.getenv("GROQ_API_KEY")
+    if groq_api_key:
+        return LLM(
+            model=model or os.getenv("GROQ_MODEL", "llama-3.1-70b-versatile"),
+            api_key=groq_api_key,
+            api_base=os.getenv("GROQ_API_BASE", "https://api.groq.com/openai/v1"),
+            temperature=temperature,
+        )
+
+    return LLM(
+        model=model or os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+        api_key=os.getenv("OPENAI_API_KEY"),
+        temperature=temperature,
+    )
+
+
+def _default_agent_kwargs() -> dict:
+    return {
+        "reasoning": False,
+        "max_iter": 18,
+        "allow_delegation": False,
+        "inject_date": True,
+    }
 
 
 @CrewBase
 class UltimateAiPoweredDigitalEmpireMultiPlatformDominationWithVoiceVideoCloningCrew:
-    """UltimateAiPoweredDigitalEmpireMultiPlatformDominationWithVoiceVideoCloning crew"""
+    """Agentic growth operating system for unstoppable digital dominance."""
 
-    
+    budget_modes = {"scrappy", "balanced", "premium"}
+
+    # --- Agents -----------------------------------------------------------------
+
     @agent
-    def youtube_trend_research_specialist(self) -> Agent:
-
-        
+    def growth_signal_hunter(self) -> Agent:
+        tools = [EXASearchTool(), BraveSearchTool()]
         return Agent(
-            config=self.agents_config["youtube_trend_research_specialist"],
-            
-            
-            tools=[
-				EXASearchTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+            config=self.agents_config["growth_signal_hunter"],
+            tools=tools,
+            llm=_build_llm(),
+            **_default_agent_kwargs(),
         )
-    
+
     @agent
-    def content_script_writer(self) -> Agent:
-
-        
+    def audience_intelligence_analyst(self) -> Agent:
+        tools = [ScrapeWebsiteTool(), EXASearchTool()]
         return Agent(
-            config=self.agents_config["content_script_writer"],
-            
-            
-            tools=[
-				ScrapeWebsiteTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+            config=self.agents_config["audience_intelligence_analyst"],
+            tools=tools,
+            llm=_build_llm(),
+            **_default_agent_kwargs(),
         )
-    
+
     @agent
-    def youtube_seo_specialist(self) -> Agent:
-
-        
+    def social_content_architect(self) -> Agent:
         return Agent(
-            config=self.agents_config["youtube_seo_specialist"],
-            
-            
-            tools=[
-				EXASearchTool(),
-				BraveSearchTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+            config=self.agents_config["social_content_architect"],
+            tools=[ScrapeWebsiteTool()],
+            llm=_build_llm(),
+            **_default_agent_kwargs(),
         )
-    
+
     @agent
-    def ai_video_producer(self) -> Agent:
-
-        
+    def visual_storyboard_director(self) -> Agent:
+        storyboard_tool = CloudStoryboardTool()
         return Agent(
-            config=self.agents_config["ai_video_producer"],
-            
-            
-            tools=[
-				DallETool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+            config=self.agents_config["visual_storyboard_director"],
+            tools=[storyboard_tool],
+            llm=_build_llm(temperature=0.2),
+            **_default_agent_kwargs(),
         )
-    
+
     @agent
-    def youtube_publisher(self) -> Agent:
-
-        
+    def human_tone_editor(self) -> Agent:
         return Agent(
-            config=self.agents_config["youtube_publisher"],
-            
-            
-            tools=[
-				DallETool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+            config=self.agents_config["human_tone_editor"],
+            tools=[],
+            llm=_build_llm(temperature=0.3),
+            **_default_agent_kwargs(),
         )
-    
+
     @agent
-    def competitive_intelligence_analyst(self) -> Agent:
-
-        
+    def distribution_field_commander(self) -> Agent:
+        tools = [BraveSearchTool(), EXASearchTool()]
         return Agent(
-            config=self.agents_config["competitive_intelligence_analyst"],
-            
-            
-            tools=[
-				EXASearchTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+            config=self.agents_config["distribution_field_commander"],
+            tools=tools,
+            llm=_build_llm(),
+            **_default_agent_kwargs(),
         )
-    
+
     @agent
-    def viral_content_formula_engineer(self) -> Agent:
-
-        
+    def performance_oracle(self) -> Agent:
         return Agent(
-            config=self.agents_config["viral_content_formula_engineer"],
-            
-            
-            tools=[
-				EXASearchTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+            config=self.agents_config["performance_oracle"],
+            tools=[ScrapeWebsiteTool()],
+            llm=_build_llm(temperature=0.25),
+            **_default_agent_kwargs(),
         )
-    
-    @agent
-    def ai_trend_predictor(self) -> Agent:
 
-        
-        return Agent(
-            config=self.agents_config["ai_trend_predictor"],
-            
-            
-            tools=[
-				EXASearchTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
-        )
-    
-    @agent
-    def youtube_algorithm_hacker(self) -> Agent:
+    # --- Tasks ------------------------------------------------------------------
 
-        
-        return Agent(
-            config=self.agents_config["youtube_algorithm_hacker"],
-            
-            
-            tools=[
-				EXASearchTool(),
-				BraveSearchTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+    @task
+    def scan_growth_opportunities(self) -> Task:
+        return Task(
+            config=self.tasks_config["scan_growth_opportunities"],
+            markdown=True,
         )
-    
-    @agent
-    def engagement_manipulation_specialist(self) -> Agent:
 
-        
-        return Agent(
-            config=self.agents_config["engagement_manipulation_specialist"],
-            
-            
-            tools=[
-				EXASearchTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+    @task
+    def synthesize_audience_intelligence(self) -> Task:
+        return Task(
+            config=self.tasks_config["synthesize_audience_intelligence"],
+            markdown=True,
         )
-    
-    @agent
-    def medium_blog_domination_specialist(self) -> Agent:
 
-        
-        return Agent(
-            config=self.agents_config["medium_blog_domination_specialist"],
-            
-            
-            tools=[
-				ScrapeWebsiteTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+    @task
+    def architect_campaign_system(self) -> Task:
+        return Task(
+            config=self.tasks_config["architect_campaign_system"],
+            markdown=True,
         )
-    
-    @agent
-    def multi_platform_content_strategist(self) -> Agent:
 
-        
-        return Agent(
-            config=self.agents_config["multi_platform_content_strategist"],
-            
-            
-            tools=[
-				EXASearchTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+    @task
+    def craft_storyboard_brief(self) -> Task:
+        return Task(
+            config=self.tasks_config["craft_storyboard_brief"],
+            markdown=True,
         )
-    
-    @agent
-    def affiliate_monetization_strategist(self) -> Agent:
 
-        
-        return Agent(
-            config=self.agents_config["affiliate_monetization_strategist"],
-            
-            
-            tools=[
-				EXASearchTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+    @task
+    def render_storyboard_sequences(self) -> Task:
+        return Task(
+            config=self.tasks_config["render_storyboard_sequences"],
+            markdown=True,
         )
-    
-    @agent
-    def email_list_building_automation_specialist(self) -> Agent:
 
-        
-        return Agent(
-            config=self.agents_config["email_list_building_automation_specialist"],
-            
-            
-            tools=[
-				EXASearchTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+    @task
+    def polish_human_copy(self) -> Task:
+        return Task(
+            config=self.tasks_config["polish_human_copy"],
+            markdown=True,
         )
-    
-    @agent
-    def seo_search_domination_expert(self) -> Agent:
 
-        
-        return Agent(
-            config=self.agents_config["seo_search_domination_expert"],
-            
-            
-            tools=[
-				EXASearchTool(),
-				BraveSearchTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+    @task
+    def deploy_distribution_playbook(self) -> Task:
+        return Task(
+            config=self.tasks_config["deploy_distribution_playbook"],
+            markdown=True,
         )
-    
-    @agent
-    def audience_psychology_retention_master(self) -> Agent:
 
-        
-        return Agent(
-            config=self.agents_config["audience_psychology_retention_master"],
-            
-            
-            tools=[
-				EXASearchTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
+    @task
+    def analyze_performance_feedback(self) -> Task:
+        return Task(
+            config=self.tasks_config["analyze_performance_feedback"],
+            markdown=True,
         )
-    
-    @agent
-    def podcast_audio_content_domination_specialist(self) -> Agent:
 
-        
-        return Agent(
-            config=self.agents_config["podcast_audio_content_domination_specialist"],
-            
-            
-            tools=[
-				EXASearchTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
-        )
-    
-    @agent
-    def market_intelligence_competitor_destroyer(self) -> Agent:
-
-        
-        return Agent(
-            config=self.agents_config["market_intelligence_competitor_destroyer"],
-            
-            
-            tools=[
-				EXASearchTool(),
-				BraveSearchTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
-        )
-    
-    @agent
-    def content_voice_specialist(self) -> Agent:
-
-        
-        return Agent(
-            config=self.agents_config["content_voice_specialist"],
-            
-            
-            tools=[
-				ElevenLabsVoiceTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
-        )
-    
-    @agent
-    def visual_content_strategy_specialist(self) -> Agent:
-
-        
-        return Agent(
-            config=self.agents_config["visual_content_strategy_specialist"],
-            
-            
-            tools=[
-				RunwayVideoTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
-        )
-    
-    @agent
-    def personal_branding_presentation_specialist(self) -> Agent:
-
-        
-        return Agent(
-            config=self.agents_config["personal_branding_presentation_specialist"],
-            
-            
-            tools=[
-				HeyGenAvatarTool()
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
-        )
-    
-    @agent
-    def cost_optimization_roi_manager(self) -> Agent:
-
-        
-        return Agent(
-            config=self.agents_config["cost_optimization_roi_manager"],
-            
-            
-            tools=[
-
-            ],
-            reasoning=False,
-            max_reasoning_attempts=None,
-            inject_date=True,
-            allow_delegation=False,
-            max_iter=25,
-            max_rpm=None,
-            max_execution_time=None,
-            llm=LLM(
-                model="gpt-4o-mini",
-                temperature=0.7,
-            ),
-            
-        )
-    
-
-    
-    @task
-    def competitive_intelligence_analysis(self) -> Task:
-        return Task(
-            config=self.tasks_config["competitive_intelligence_analysis"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def predict_future_viral_topics(self) -> Task:
-        return Task(
-            config=self.tasks_config["predict_future_viral_topics"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def hack_youtube_algorithm(self) -> Task:
-        return Task(
-            config=self.tasks_config["hack_youtube_algorithm"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def engineer_viral_content_formulas(self) -> Task:
-        return Task(
-            config=self.tasks_config["engineer_viral_content_formulas"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def engineer_addictive_engagement(self) -> Task:
-        return Task(
-            config=self.tasks_config["engineer_addictive_engagement"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def research_trending_topics(self) -> Task:
-        return Task(
-            config=self.tasks_config["research_trending_topics"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def create_video_scripts(self) -> Task:
-        return Task(
-            config=self.tasks_config["create_video_scripts"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def optimize_for_youtube_seo(self) -> Task:
-        return Task(
-            config=self.tasks_config["optimize_for_youtube_seo"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def generate_video_content(self) -> Task:
-        return Task(
-            config=self.tasks_config["generate_video_content"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def generate_ai_voiceovers(self) -> Task:
-        return Task(
-            config=self.tasks_config["generate_ai_voiceovers"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def create_viral_medium_articles(self) -> Task:
-        return Task(
-            config=self.tasks_config["create_viral_medium_articles"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def create_custom_thumbnails(self) -> Task:
-        return Task(
-            config=self.tasks_config["create_custom_thumbnails"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def create_youtube_shorts(self) -> Task:
-        return Task(
-            config=self.tasks_config["create_youtube_shorts"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def launch_viral_podcast_empire(self) -> Task:
-        return Task(
-            config=self.tasks_config["launch_viral_podcast_empire"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def generate_ai_video_content(self) -> Task:
-        return Task(
-            config=self.tasks_config["generate_ai_video_content"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def create_ai_avatar_videos(self) -> Task:
-        return Task(
-            config=self.tasks_config["create_ai_avatar_videos"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def generate_multi_platform_content_packages(self) -> Task:
-        return Task(
-            config=self.tasks_config["generate_multi_platform_content_packages"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def dominate_all_search_rankings(self) -> Task:
-        return Task(
-            config=self.tasks_config["dominate_all_search_rankings"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def upload_to_youtube(self) -> Task:
-        return Task(
-            config=self.tasks_config["upload_to_youtube"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def monitor_analytics_and_optimize(self) -> Task:
-        return Task(
-            config=self.tasks_config["monitor_analytics_and_optimize"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def design_affiliate_monetization_strategy(self) -> Task:
-        return Task(
-            config=self.tasks_config["design_affiliate_monetization_strategy"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def build_email_empire_automation_funnels(self) -> Task:
-        return Task(
-            config=self.tasks_config["build_email_empire_automation_funnels"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def engineer_audience_addiction_loyalty_systems(self) -> Task:
-        return Task(
-            config=self.tasks_config["engineer_audience_addiction_loyalty_systems"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def execute_total_market_domination_strategy(self) -> Task:
-        return Task(
-            config=self.tasks_config["execute_total_market_domination_strategy"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def launch_total_digital_empire(self) -> Task:
-        return Task(
-            config=self.tasks_config["launch_total_digital_empire"],
-            markdown=False,
-            
-            
-        )
-    
-    @task
-    def optimize_costs_roi_strategy(self) -> Task:
-        return Task(
-            config=self.tasks_config["optimize_costs_roi_strategy"],
-            markdown=False,
-            
-            
-        )
-    
+    # --- Crew -------------------------------------------------------------------
 
     @crew
     def crew(self) -> Crew:
-        """Creates the UltimateAiPoweredDigitalEmpireMultiPlatformDominationWithVoiceVideoCloning crew"""
         return Crew(
-            agents=self.agents,  # Automatically created by the @agent decorator
-            tasks=self.tasks,  # Automatically created by the @task decorator
+            agents=self.agents,
+            tasks=self.tasks,
             process=Process.sequential,
-            verbose=True,
+            verbose=os.getenv("CREW_VERBOSE", "true").lower() == "true",
         )
 
-    def _load_response_format(self, name):
-        with open(os.path.join(self.base_directory, "config", f"{name}.json")) as f:
-            json_schema = json.loads(f.read())
+    # --- Utilities --------------------------------------------------------------
 
-        return SchemaConverter.build(json_schema)
+    @staticmethod
+    def validate_inputs(inputs: dict) -> dict:
+        """Normalize and validate runtime inputs before kickoff."""
+
+        inputs = dict(inputs or {})
+        budget = inputs.get("budget_level", "scrappy").lower()
+        if budget not in UltimateAiPoweredDigitalEmpireMultiPlatformDominationWithVoiceVideoCloningCrew.budget_modes:
+            budget = "scrappy"
+        inputs["budget_level"] = budget
+        inputs.setdefault("brand_name", inputs.get("niche", "Next-Gen Brand"))
+        inputs.setdefault("offer_name", inputs.get("brand_name"))
+        inputs.setdefault("brand_voice", "confident, human, future-forward")
+        return inputs
+
+    def kickoff(self, inputs: Optional[dict] = None) -> List[Task]:
+        """Helper to run the crew with safe defaults."""
+
+        sanitized = self.validate_inputs(inputs or {})
+        return self.crew().kickoff(inputs=sanitized)
