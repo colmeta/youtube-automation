@@ -20,5 +20,10 @@ run_crew = "ultimate_ai_powered_digital_empire___multi_platform_domination_with_
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build]
+include = ["src/**", "Human_content/**", "Popcorn/**", "README.md"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ultimate_ai_powered_digital_empire___multi_platform_domination_with_voice_video_cloning"]
 [tool.crewai]
 type = "crew"
